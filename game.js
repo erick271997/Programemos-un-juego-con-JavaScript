@@ -1,6 +1,6 @@
 const canvas = document.querySelector('#game');
 const game = canvas.getContext('2d');
-const btnUp = document.querySelector('#up');
+const btnUp = document.querySelector('#up');// para los botones
 const btnLeft = document.querySelector('#left');
 const btnRight = document.querySelector('#right');
 const btnDown = document.querySelector('#down');
@@ -34,13 +34,16 @@ function setCanvasSize() {
 function startGame() {
   console.log({ canvasSize, elementsSize });
 
-  game.font = elementsSize + 'px Verdana';
-  game.textAlign = 'end';
+  game.font = elementsSize + 'px Verdana'; // para el tipo y el tamaño de bomba 
+  game.textAlign = 'end'; /* estos es para su ubicacion donde va poner  */
 
   const map = maps[0];
   const mapRows = map.trim().split('\n');
   const mapRowCols = mapRows.map(row => row.trim().split(''));
   console.log({map, mapRows, mapRowCols});
+  
+  game.clearRect(0,0, canvasSize, canvasSize);
+
   
   mapRowCols.forEach((row, rowI) => {
     row.forEach((col, colI) => {
@@ -49,9 +52,11 @@ function startGame() {
       const posY = elementsSize * (rowI + 1);
 
       if (col == 'O') {
-        playerPosition.x = posX;
-        playerPosition.y = posY;
-        console.log({playerPosition});
+        if (!playerPosition.x && !playerPosition.y) {
+            playerPosition.x = posX;
+            playerPosition.y = posY;
+            console.log({playerPosition});
+        }
       }
       
       game.fillText(emoji, posX, posY);
@@ -78,16 +83,22 @@ function moveByKeys(event) {
   else if (event.key == 'ArrowDown') moveDown();
 }
 function moveUp() {
-  console.log('Me quiero mover hacia arriba');
-  playerPosition.y -= elementsSize;
-  movePlayer();
-}
-function moveLeft() {
-  console.log('Me quiero mover hacia izquierda');
-}
-function moveRight() {
-  console.log('Me quiero mover hacia derecha');
-}
-function moveDown() {
-  console.log('Me quiero mover hacia abajo');
-}
+    console.log('Me quiero mover hacia arriba');
+    playerPosition.y -= elementsSize;
+    startGame();
+  }
+  function moveLeft() {
+    console.log('Me quiero mover hacia izquierda');
+    playerPosition.x -= elementsSize;
+    startGame();
+  }
+  function moveRight() {
+    console.log('Me quiero mover hacia derecha');
+    playerPosition.x += elementsSize;
+    startGame();
+  }
+  function moveDown() {
+    console.log('Me quiero mover hacia abajo');
+    playerPosition.y += elementsSize;
+    startGame();
+  }
