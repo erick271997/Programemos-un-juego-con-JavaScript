@@ -12,6 +12,7 @@ const emojis = {
     'BOMB_COLLISION': '🔥',
     'GAME_OVER': '👎',
     'WIN': '🏆',
+    'HEART': '❤️', // se le pone nombre para llamar en js
   };
   
   const maps = [];
