@@ -8,6 +8,7 @@ const btnDown = document.querySelector('#down');
 let canvasSize;
 let elementsSize;
 let level = 0;
+let lives = 3;
 
 const playerPosition = {
   x: undefined,
@@ -40,7 +41,7 @@ function setCanvasSize() {
 function startGame() {
   console.log({ canvasSize, elementsSize });
 
-  game.font = elementsSize + 'px Verdana';
+  game.font = elementsSize + 'px Verdana'; // Para poberlo tipo y el tamaño  a la bomba, se le debe poner tipo de letra
   game.textAlign = 'end';
 
   const map = maps[level];
@@ -102,7 +103,7 @@ function movePlayer() {
   });
   
   if (enemyCollision) {
-    console.log('Chocaste contra un enemigo :(');
+    levelFail();
   }
 
   game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y);
@@ -111,6 +112,22 @@ function movePlayer() {
 function levelWin() {
   console.log('Subiste de nivel');
   level++;
+  startGame();
+}
+
+function levelFail() {
+  console.log('Chocaste contra un enemigo :(');
+  lives--;
+
+  console.log(lives);
+  
+  if (lives <= 0) { // para vida jugadores 
+    level = 0;
+    lives = 3; // para 
+  }
+
+  playerPosition.x = undefined;
+  playerPosition.y = undefined;
   startGame();
 }
 
