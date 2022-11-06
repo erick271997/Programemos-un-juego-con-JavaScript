@@ -1,15 +1,20 @@
 const canvas = document.querySelector('#game');
 const game = canvas.getContext('2d');
 const btnUp = document.querySelector('#up');// Para los botones 
-const btnLeft = document.querySelector('#left'); // Para los botones
-const btnRight = document.querySelector('#right'); // Para los botones
-const btnDown = document.querySelector('#down');// Para los botones
+const btnLeft = document.querySelector('#left');// Para los botones 
+const btnRight = document.querySelector('#right');
+const btnDown = document.querySelector('#down');
 const spanLives = document.querySelector('#lives');// Para mostra la vida
+const spanTime = document.querySelector('#time');//Para mostra el tiempo
 
 let canvasSize;
 let elementsSize;
 let level = 0; // Para subirte de nivel
 let lives = 3;
+
+let timeStart;
+let timePlayer;
+let timeInterval;
 
 const playerPosition = {
   x: undefined,
@@ -21,7 +26,7 @@ const giftPosition = {
 };
 let enemyPositions = [];
 
-window.addEventListener('load', setCanvasSize);
+window.addEventListener('load', setCanvasSize);// Para qyue cargue el HTML y el juego aparezac
 window.addEventListener('resize', setCanvasSize);
 
 function setCanvasSize() {
@@ -42,7 +47,7 @@ function setCanvasSize() {
 function startGame() {
   console.log({ canvasSize, elementsSize });
 
-  game.font = elementsSize + 'px Verdana'; // Para poberlo tipo y el tamaño  a la bomba, se le debe poner tipo de letra
+  game.font = elementsSize + 'px Verdana';  // Para poberlo tipo y el tamaño  a la bomba, se le debe poner tipo de letra
   game.textAlign = 'end';
 
   const map = maps[level];
@@ -51,8 +56,13 @@ function startGame() {
     gameWin();
     return;
   }
+
+  if (!timeStart) {
+    timeStart = Date.now();
+    timeInterval = setInterval(showTime, 100);
+  }
   
-  const mapRows = map.trim().split('\n');//Para crear mapa del juego 
+  const mapRows = map.trim().split('\n'); //Para crear mapa del juego 
   const mapRowCols = mapRows.map(row => row.trim().split(''));
   console.log({map, mapRows, mapRowCols});
 
@@ -121,14 +131,11 @@ function levelWin() {
 function levelFail() {
   console.log('Chocaste contra un enemigo :(');
   lives--;
-
- 
-
-  console.log(lives);
   
-  if (lives <= 0) { // para vida jugadores 
+  if (lives <= 0) {
     level = 0;
-    lives = 3; // para 
+    lives = 3;
+    timeStart = undefined;
   }
 
   playerPosition.x = undefined;
@@ -138,17 +145,19 @@ function levelFail() {
 
 function gameWin() {
   console.log('¡Terminaste el juego!');
+  clearInterval(timeInterval);
 }
 
-function showLives(){
-  const heartsArray = Array(lives).fill(emojis['HEART']);
-  /* console.log(heartsArray); */
-
-
-  spanLives.innerHTML=""; // para que aparezca 3 coraznoes
-  heartsArray.forEach(heart => spanLives.append(heart));
+function showLives() {
+  const heartsArray = Array(lives).fill(emojis['HEART']); // [1,2,3]
   
+  spanLives.innerHTML = ""; // para que aparezca 3 coraznoes
+  heartsArray.forEach(heart => spanLives.append(heart)); // foreEach para que corra el array 
+  
+}
 
+function showTime() {
+  spanTime.innerHTML = Date.now() - timeStart;
 }
 
 window.addEventListener('keydown', moveByKeys);
