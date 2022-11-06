@@ -49,11 +49,25 @@ body {
     width: 80%;
     max-width: 460px;
   }
+  .Aleta{
+    color: blueviolet;
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 60px;
+
+  }
   
   p {
     display: block;
     margin: 0;
     width: 100%;
+  }
+  #time{
+    border-color: #0a0a0a;
+    
+  }
+  #Perdiste{
+    color: #ff6600;
   }
   
   @media (max-width: 440px) {

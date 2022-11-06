@@ -13,6 +13,7 @@ const emojis = {
     'GAME_OVER': '👎',
     'WIN': '🏆',
     'HEART': '❤️', // se le pone nombre para llamar en js
+    'HAPPY': '🎉',
   };
   
   const maps = [];
@@ -52,3 +53,15 @@ const emojis = {
     XX-----OXX
     XXXXXXXXXX
   `);
+  maps.push(`
+  I-----XXXX
+  XXXXX-XXXX
+  XX-X--XXXX
+  XX-XXXXXXX
+  XXXX---XXX
+  XXXXXX-XXX
+  XX-----XXX
+  XX-XXXXXXX
+  XX-XO-OXX
+  XXXXXXXXXX
+`);
